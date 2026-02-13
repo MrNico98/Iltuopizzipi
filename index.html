@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Per l'Amore della Mia Vita ❤️</title>
 
 <style>
@@ -10,65 +10,71 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Georgia', serif;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    overflow: hidden;
-    color: white;
+    background: linear-gradient(to top, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     text-align: center;
+    color: white;
+    overflow: hidden;
 }
 
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 90%;
+    max-width: 500px;
 }
 
 h1 {
-    font-size: 3em;
-    animation: fadeIn 2s ease-in-out;
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 15px 30px;
-    font-size: 1.2em;
+    padding: 15px 25px;
+    font-size: 18px;
     background: white;
     color: #ff4e75;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    margin-top: 20px;
     transition: 0.3s;
 }
 
-button:hover {
-    background: #ff4e75;
-    color: white;
-    transform: scale(1.1);
+button:active {
+    transform: scale(0.95);
 }
 
 #message {
     margin-top: 30px;
-    font-size: 1.6em;
-    min-height: 120px;
+    font-size: 20px;
+    min-height: 100px;
+    opacity: 0;
     transition: opacity 1s ease;
 }
 
+.final {
+    font-size: 26px;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
 .heart {
-    position: absolute;
-    color: rgba(255,255,255,0.7);
+    position: fixed;
+    bottom: -20px;
     font-size: 20px;
-    animation: float 8s linear infinite;
+    animation: float 6s linear forwards;
 }
 
 @keyframes float {
-    0% { transform: translateY(100vh); opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
 }
 </style>
 </head>
@@ -77,58 +83,58 @@ button:hover {
 
 <div class="container">
     <h1>Buon San Valentino Amore Mio ❤️</h1>
-    <button onclick="startLove()">Apri il Mio Cuore 💌</button>
+    <button onclick="startLove()">Tocca Qui 💌</button>
     <div id="message"></div>
 </div>
 
 <script>
 const messages = [
-    "Sono passati 6 anni…",
-    "6 anni di sorrisi…",
-    "6 anni di abbracci che curano l’anima…",
-    "6 anni in cui ogni giorno ti sceglierei di nuovo.",
+    "Sono passati 6 anni...",
+    "6 anni di amore vero.",
+    "6 anni in cui ti sceglierei ogni giorno.",
     "Mi hai reso un uomo migliore.",
-    "Mi hai dato il regalo più grande della mia vita...",
-    "Sei una Mamma meravigliosa.",
-    "Sei la mia forza, la mia pace, la mia casa.",
-    "E non vedo l’ora di chiamarti...",
+    "Mi hai regalato la gioia più grande...",
+    "Sei una mamma meravigliosa.",
+    "Sei la mia casa, la mia pace, la mia forza.",
+    "E non vedo l'ora di chiamarti...",
     "Mia Moglie ❤️"
 ];
 
 let index = 0;
 
 function startLove() {
-    const msgDiv = document.getElementById("message");
-    msgDiv.innerHTML = "";
+    const msg = document.getElementById("message");
     index = 0;
 
-    let interval = setInterval(() => {
-        msgDiv.style.opacity = 0;
+    const interval = setInterval(() => {
+        msg.style.opacity = 0;
+
         setTimeout(() => {
-            msgDiv.innerHTML = messages[index];
-            msgDiv.style.opacity = 1;
+            msg.innerHTML = messages[index];
+            msg.style.opacity = 1;
             index++;
-            if (index >= messages.length) {
+
+            if (index === messages.length) {
+                msg.classList.add("final");
                 clearInterval(interval);
                 createHearts();
             }
+
         }, 500);
-    }, 3000);
+
+    }, 2500);
 }
 
 function createHearts() {
     setInterval(() => {
-        let heart = document.createElement("div");
-        heart.classList.add("heart");
+        const heart = document.createElement("div");
+        heart.className = "heart";
         heart.innerHTML = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-        heart.style.animationDuration = (Math.random() * 5 + 5) + "s";
+        heart.style.fontSize = (Math.random() * 15 + 15) + "px";
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-            heart.remove();
-        }, 8000);
+        setTimeout(() => heart.remove(), 6000);
     }, 300);
 }
 </script>
